@@ -28,8 +28,6 @@ function throttle(method, period, scope) {
 function handleVisiblyDone() {
     window.handleVisiblyDone = null;    
     var loadTime = new Date().getTime() - g_pageLoadStart.getTime();
-    pageTracker._trackPageview("/LoadTime/"+(loadTime/1000).toFixed(0));
-    pageTracker._trackEvent("Page Load", "Looks Done", "/", loadTime);
 }
 
 
@@ -196,7 +194,6 @@ LinksView.prototype.setData = function (categories, sites) {
         }).click(
             function () {
                 self.selectCategory($(this).data("catInfo").flag);
-                pageTracker._trackPageview("/click/category/"+$(this).data("catInfo").category); 
             }
         );
         
@@ -321,9 +318,6 @@ LinksView.prototype.selectCategory = function (flag) {
             
         }).click(
             function() {
-                try {
-                    pageTracker._trackPageview("/click/site/"+self._selectedCatName+"/"+$(this).data("logoInfo").url);
-                } catch (x) {}
                 window.location="http://" + $(this).data("logoInfo").url;
             }
         );
@@ -398,9 +392,6 @@ LinksView.prototype.hoverLogo = function ($logo, infoDelay, callback) {
 							function () {
 								if (callback && typeof callback == "function") {
 									callback();
-								}
-								if (self._userActive) {
-									pageTracker._trackPageview("/hover/site/"+self._selectedCatName+"/"+$logo.data("logoInfo").url);
 								}
 							});
 					});
